@@ -32,28 +32,48 @@
     <div class="container">
       <!-- Timeblocks go here -->
       <div class="row">
-        <div class="col text-center hour time-block" value="2PM" id="timeStamp">2PM</div>
-        <div class="col-8 youWriteHere"> <textarea id="yourInfo" style="min-width: 100%"></textarea></div>
+        <div class="col text-center hour time-block" id="9AM">9AM</div>
+        <div class="col-8 userInput"> <textarea id="9AM" class="textBoxData"  style="min-width: 100%"></textarea></div>
+        <div class="col text-center saveBtn"><button id="9AM"><i class="fas fa-lock"></i></button></div>
+      </div>
+      <div class="row">
+        <div class="col text-center hour time-block">10AM</div>
+        <div class="col-8 userInput"> <textarea id="10AM" class="textBoxData" style="min-width: 100%"></textarea></div>
+        <div class="col text-center saveBtn"><button id="10AM"><i class="fas fa-lock"></i></button></div>
+      </div>
+      <div class="row">
+        <div class="col text-center hour time-block">11AM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
         <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
       </div>
       <div class="row">
-        <div class="col text-center hour time-block" value="3PM" id="timeStamp">3PM</div>
-        <div class="col-8 youWriteHere"> <textarea id="yourInfo" style="min-width: 100%"></textarea></div>
+        <div class="col text-center hour time-block">12PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
         <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
       </div>
       <div class="row">
-        <div class="col text-center hour time-block" value="4PM" id="timeStamp">4PM</div>
-        <div class="col-8 youWriteHere"> <textarea id="yourInfo" style="min-width: 100%"></textarea></div>
+        <div class="col text-center hour time-block">1PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
         <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
       </div>
       <div class="row">
-        <div class="col text-center hour time-block" value="4PM" id="timeStamp">5PM</div>
-        <div class="col-8 youWriteHere"> <textarea id="yourInfo" style="min-width: 100%"></textarea></div>
+        <div class="col text-center hour time-block">2PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
         <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
       </div>
       <div class="row">
-        <div class="col text-center hour time-block" value="4PM" id="timeStamp">6PM</div>
-        <div class="col-8 youWriteHere"> <textarea id="yourInfo" style="min-width: 100%"></textarea></div>
+        <div class="col text-center hour time-block">3PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
+        <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
+      </div>
+      <div class="row">
+        <div class="col text-center hour time-block">4PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
+        <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
+      </div>
+      <div class="row">
+        <div class="col text-center hour time-block">5PM</div>
+        <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
         <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
       </div>
 
@@ -67,39 +87,54 @@
     <script>
       $(document).ready(function() {
       //show current day at the top of the page
+
       $('#currentDay').append(moment().format('MMMM Do YYYY, h:mm a'));
 
       
-      $('#yourInfo').append(localStorage.getItem("my9AM"));
 
-      
-      
-      $(".saveBtn").on("click", function () {
-        var whatYaUpTo = $('#yourInfo').val();
-        console.log(whatYaUpTo);
-        localStorage.setItem("my9AM", whatYaUpTo);
-      });
 
       var currentTime = moment();
  
 
       var timeStamps = $(".hour");
-      var youWriteHeres = $(".youWriteHere");
+      var userInputs = $(".userInput");
       console.log(timeStamps);
 
       for (i = 0; i < timeStamps.length; i++) {
         let calendarNodeTime = moment(timeStamps[i].innerText, "hA");
         if (calendarNodeTime.hours() === currentTime.hours()) {
-          youWriteHeres[i].classList.add("present");
+          userInputs[i].classList.add("present");
         } else if(calendarNodeTime.isBefore(currentTime)) {
-          youWriteHeres[i].classList.add("past");
+          userInputs[i].classList.add("past");
         } else {
-          youWriteHeres[i].classList.add("future");
+          userInputs[i].classList.add("future");
         }
       }
 
+      $('.textBoxData').append(localStorage.getItem(id));
+
+
+
+
+
+
+
+
+
+      var whatYaUpTo;
+      var id;
+
+
+      $(".saveBtn").on("click", function (e) {
+        id = e.target;
+        whatYaUpTo = $('.textBoxData').val();
+        console.log(whatYaUpTo); 
+        localStorage.setItem(id, whatYaUpTo);
+      });
 
       })
+
+
     </script>
   </body>
 </html>
