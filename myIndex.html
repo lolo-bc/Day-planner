@@ -24,77 +24,84 @@
   </head>
 
   <body>
+
+    <!-- Header of the Page with essentially empty area for moment.js -->
     <header class="jumbotron">
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
-      <p id="currentDay" class="lead"></p>
+      <p id="currentDay" class="lead">loading clock...</p>
     </header>
+
+    <!-- Giant table one row for each time of the day with a textarea and save button  -->
     <div class="container">
-      <!-- Timeblocks go here -->
       <div class="row">
         <div class="col text-center hour time-block" >9AM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" id="9AM" ><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="9AM" ><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">10AM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" id="10AM"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="10AM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">11AM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn " id="11AM"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn " id="11AM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block" >12PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" id="12PM"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="12PM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block" >1PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" id="1AM"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="1AM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">2PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" id="2PM"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="2PM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">3PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn" ><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="3PM" ><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">4PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="4PM"><i class="fas fa-lock"></i></div>
       </div>
       <div class="row">
         <div class="col text-center hour time-block">5PM</div>
         <div class="col-8 userInput"> <textarea class="textBoxData" style="min-width: 100%"></textarea></div>
-        <div class="col text-center saveBtn"><button><i class="fas fa-lock"></i></button></div>
+        <div class="col text-center saveBtn" id="5PM"><i class="fas fa-lock"></i></div>
       </div>
 
 
     </div>
+
+    <!-- Javascript starts here > -->
     <script src="moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <script>
       $(document).ready(function() {
-      //show current day at the top of the page
 
-      $('#currentDay').append(moment().format('MMMM Do YYYY, h:mm a'));
+      // Clock at the top of the page that uses moment.js to update every minute 
+      $('#currentDay').append();
 
+      function update() {
+        $('#currentDay').html(moment().format('MMMM Do YYYY, h:mm'));
+      } setInterval(update, 1000);
       
 
 
+      // This code block uses moment.js to track the time of day and add CSS styles accordingly 
       var currentTime = moment();
- 
-
       var timeStamps = $(".hour");
       var userInputs = $(".userInput");
       console.log(timeStamps);
@@ -110,38 +117,44 @@
         }
       }
 
-
+      // Loads up the information saved in local storage
       var arrayOfTimeAndTasks = JSON.parse(localStorage.getItem('saveUserTaskLocal'));
+
       if (arrayOfTimeAndTasks) {
 
       for (i = 0; i <arrayOfTimeAndTasks.length; i++) {
         
         $('#'+arrayOfTimeAndTasks[i].time).prev().children('.textBoxData').text(arrayOfTimeAndTasks[i].task);
+
+        }
+
       }
 
-    }
-
-
-
-
+      // saving users data to local storage
       var whatTimeDoesTheInfoGoWith;
-      var anArrayOfInfoMaybe = [];
       var usersText;
       var id;
-
 
       $(".saveBtn").on("click", function () {
         whatTimeDoesTheInfoGoWith = $(this).attr("id");
         console.log(whatTimeDoesTheInfoGoWith);
         usersText = $(this).prev().children('.textBoxData').val();
         console.log(usersText); 
-
+        // array to hold data
         var timeAndTaks = {
           time: whatTimeDoesTheInfoGoWith,
           task: usersText
         }
-        anArrayOfInfoMaybe.push(timeAndTaks);
-        localStorage.setItem("saveUserTaskLocal", JSON.stringify(anArrayOfInfoMaybe));
+
+        // This loop overrides any previous data saved in that timeblock 
+        for (i=0; i < arrayOfTimeAndTasks.length; i++) {
+          if (whatTimeDoesTheInfoGoWith == arrayOfTimeAndTasks[i].time)  {
+            arrayOfTimeAndTasks.splice(i, 1);
+          }
+        }
+
+        arrayOfTimeAndTasks.push(timeAndTaks);
+        localStorage.setItem("saveUserTaskLocal", JSON.stringify(arrayOfTimeAndTasks));
         console.log(localStorage.getItem("saveUserTaskLocal"));
       });
 
